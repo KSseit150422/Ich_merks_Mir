@@ -10,7 +10,7 @@ import UIKit
 
 struct ImagePicker: UIViewControllerRepresentable {
     @Binding var image: UIImage?
-
+    
     class Coordinator: NSObject, UINavigationControllerDelegate, UIImagePickerControllerDelegate {
         let parent: ImagePicker
 
@@ -24,6 +24,10 @@ struct ImagePicker: UIViewControllerRepresentable {
             }
             picker.dismiss(animated: true)
         }
+
+        func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+            picker.dismiss(animated: true)
+        }
     }
 
     func makeCoordinator() -> Coordinator {
@@ -33,6 +37,7 @@ struct ImagePicker: UIViewControllerRepresentable {
     func makeUIViewController(context: Context) -> UIImagePickerController {
         let picker = UIImagePickerController()
         picker.delegate = context.coordinator
+        picker.sourceType = .camera // Hier wird die Kamera anstelle der Fotomediathek ausgewählt
         return picker
     }
 

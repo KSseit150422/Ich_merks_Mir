@@ -17,7 +17,7 @@ struct ListView: View {
             VStack {
                 List {
                     ForEach(reminders.indices, id: \.self) { index in
-                        NavigationLink(destination: DetailView(reminder: $reminders[index])) {
+                        NavigationLink(destination: DetailView(reminder: $reminders[index], reminders: $reminders)) {
                             Text(reminders[index].name)
                         }
                     }
@@ -41,10 +41,11 @@ struct ListView: View {
             }
         }
     }
-    
+
     func addNewReminder() {
         guard !newReminderName.isEmpty else { return }
-        let newReminder = Reminder(name: newReminderName, text: "", audioPath: nil, photoPath: nil)
+        let newReminder = Reminder(name: newReminderName, texts: [], audioPath: nil, photoPaths: [])
+
         reminders.append(newReminder)
         helper.saveToUserDefaults(reminders: reminders)
         newReminderName = ""
@@ -56,7 +57,12 @@ struct ListView: View {
     }
     
     func loadReminders() {
-        reminders = helper.loadFromUserDefaults()
+        reminders = helper.loadFromUserDefaults() // Lade das gesamte Array von Erinnerungen
     }
+
+    func saveReminders() {
+        helper.saveToUserDefaults(reminders: reminders) // Speichere das gesamte Array von Erinnerungen
+    }
+
 }
 

@@ -9,8 +9,9 @@ import Foundation
 
 struct Reminder: Identifiable, Codable {
     var id = UUID()
-    var name: String  // Der Name der Liste
-    var text: String  // Die Details der Erinnerung (Text)
+    var name: String
+    var texts: [String] = [] // Mehrere Texte können hier gespeichert werden
     var audioPath: String?
-    var photoPath: String?
+    var photoPaths: [String] = []
 }
+

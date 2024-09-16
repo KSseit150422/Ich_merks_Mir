@@ -18,7 +18,7 @@ class AudioRecorder: ObservableObject {
 
         let settings = [
             AVFormatIDKey: Int(kAudioFormatMPEG4AAC),
-            AVSampleRateKey: 44100,  // 44.1 kHz ist ein Standardwert für Audiodateien
+            AVSampleRateKey: 12000,
             AVNumberOfChannelsKey: 1,
             AVEncoderAudioQualityKey: AVAudioQuality.high.rawValue
         ]
@@ -28,7 +28,6 @@ class AudioRecorder: ObservableObject {
             audioRecorder?.record()
             isRecording = true
             audioURL = audioFilename
-            print("Aufnahme gestartet: \(audioFilename)")
         } catch {
             print("Fehler bei der Aufnahme: \(error.localizedDescription)")
         }
@@ -37,12 +36,12 @@ class AudioRecorder: ObservableObject {
     func stopRecording() {
         audioRecorder?.stop()
         isRecording = false
-        print("Aufnahme abgeschlossen, Datei gespeichert unter: \(audioURL?.path ?? "keine Datei")")
     }
 
     private func getDocumentsDirectory() -> URL {
         return FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
     }
 }
+
 
 
